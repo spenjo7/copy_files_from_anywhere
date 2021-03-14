@@ -1,0 +1,63 @@
+#!/bin/bash
+######################################################################################################################
+## Copy specific files to whichever folder the script is called from. 												##
+##																													##
+######################################################################################################################
+
+## Set up some variables ##
+SRC="$HOME/templates"
+COUNT_COPY=0
+COUNT_SKIP=0
+DEST=$(pwd)
+
+### set and check source path based on user input ##
+### check to see if user entered a value and makesure it starts with /
+if [ -z "$1" ]
+then 
+	SUBFOLDER='/default'
+elif [[ $1 = '/'*  ]]
+then 
+	SUBFOLDER=$1
+else
+	SUBFOLDER='/'$1
+fi
+
+FULLSRC=$SRC$SUBFOLDER
+
+if [ ! -d "$SRC" ]
+then
+	echo "Origin Folder [$SRC] folder does not exist. Creating now."
+	mkdir $SRC
+fi
+
+if [ ! -d "$FULLSRC" ]
+then
+	echo "Template Folder [$FULLSRC] folder does not exist. Creating now."
+	mkdir $FULLSRC
+fi
+
+### Check to see if source contains folders before attempting copy ###
+
+if find $FULLSRC -mindepth 1 | read;
+then
+	for FILE in $FULLSRC'/'*
+	do
+	FNAME=$(basename $FILE)
+	DNAME=$DEST/$FNAME
+	if [ -f "$DNAME" ];
+	then
+		echo "...Skipping $FNAME since $DNAME already exists."
+		let "COUNT_SKIP+=1"
+	else
+		echo "...Copying $FILE into $DNAME"
+		cp -r $FILE $DEST
+		let "COUNT_COPY+=1"
+	fi
+	done
+
+	echo "Done: [$COUNT_COPY] files Copied. [$COUNT_SKIP] files Skipped."
+	exit
+else
+	echo "$FULLSRC is empty! Ending script."
+	exit
+fi

@@ -50,7 +50,7 @@ then
 		let "COUNT_SKIP+=1"
 	else
 		echo "...Copying $FILE into $DNAME"
-		cp -r $FILE $DEST
+		cp -r "$FILE" "$DEST"
 		let "COUNT_COPY+=1"
 	fi
 	done

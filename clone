@@ -40,14 +40,19 @@ fi
 
 if find $FULLSRC -mindepth 1 | read;
 then
-	for FILE in $FULLSRC'/'*
+	for FILE in $FULLSRC'/'.*
 	do
+#	echo $FILE '|' $FULLSRC  ## devtest
 	FNAME=$(basename $FILE)
 	DNAME=$DEST/$FNAME
 	if [ -f "$DNAME" ];
 	then
 		echo "...Skipping $FNAME since $DNAME already exists."
 		let "COUNT_SKIP+=1"
+	elif [ $FILE == $FULLSRC'/..' ];
+	then
+		echo "Ignore Base Directory"
+	
 	else
 		echo "...Copying $FILE into $DNAME"
 		cp -r "$FILE" "$DEST"

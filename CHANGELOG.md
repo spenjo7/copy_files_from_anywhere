@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.0.2] - 2021-03-16
+
+### Modified
+- clone: Added a fix which caused files that started with '.' to be ignored
+-- Specifically designed and tested fix to make sure that parent folders are not inadvertantly copied without preventing child folders from copying correctly
+
 ## [1.0.1] - 2021-03-15 
 
 ### Added

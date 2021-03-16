@@ -40,27 +40,29 @@ fi
 
 if find $FULLSRC -mindepth 1 | read;
 then
-	for FILE in $FULLSRC'/'.*
+	shopt -s dotglob
+	for FILE in $FULLSRC'/'*
 	do
-#	echo $FILE '|' $FULLSRC  ## devtest
 	FNAME=$(basename $FILE)
 	DNAME=$DEST/$FNAME
+#	echo $FULLSRC '|' $FILE '|' $FNAME ## DEVTEST
+
 	if [ -f "$DNAME" ];
 	then
 		echo "...Skipping $FNAME since $DNAME already exists."
 		let "COUNT_SKIP+=1"
-	elif [ $FILE == $FULLSRC'/..' ];
+	elif [ $FILE == $FULLSRC'/.' ] || [ $FILE == $FULLSRC'/..' ];
 	then
 		echo "Ignore Base Directory"
-	
 	else
 		echo "...Copying $FILE into $DNAME"
-		cp -r "$FILE" "$DEST"
+		cp -rn "$FILE" "$DEST" || true ## || true prevents early exit if file exists
 		let "COUNT_COPY+=1"
 	fi
 	done
 
 	echo "Done: [$COUNT_COPY] files Copied. [$COUNT_SKIP] files Skipped."
+	shopt -u dotglob
 	exit
 else
 	echo "$FULLSRC is empty! Ending script."

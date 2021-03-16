@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [1.0.3] - 2021-03-16
+
+### Important Info
+- It was revealed during testing that Sub-Folders are treated as 1 item during the copy counts; Its unlikely that I am going to be able to fix this without a massive refactor. 
+This also might cause sub-folder contents to not copy if the destination already contains that sub-folder. Unlikely to fix that issue due to the same refactoring requirements.
+Likewise, this script was primarly created to bring template files into new projects/folders. It was never intended for comlex functionality. If you need to combine data structures, I would recomend making a new secondary template for that specific combination of folders/files. 
+
+### Modified
+-clone: Had to patch again due to an issue where existing files were getting overwritten. 
+
+
 ## [1.0.2] - 2021-03-16
 
 ### Modified

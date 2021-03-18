@@ -35,7 +35,10 @@ $ vim .bash_profile
 ```
 
 5. Check the file to see if it includes the following text:
+```
 PATH=~/bin:$PATH
+source ~/.bashrc
+```
 
 6. If the file already includes that line, quit vim ( then skip to step 7 ):
 ```
